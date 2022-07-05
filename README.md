@@ -6,3 +6,21 @@ FST is like [VCD](https://en.wikipedia.org/wiki/Value_change_dump) is an open fo
 Unlike VCD, FST is a binary format that offers much better performance for very large dumpfiles.
 FST was developed as part of gtkwave.
 For more details on the format, see [GTKWave 3.3 Wave Analyzer User's Guide](http://gtkwave.sourceforge.net/gtkwave.pdf).
+
+
+## libfst Sources
+ * Location: fst
+ * Taken from
+   * Repo: https://github.com/gtkwave/gtkwave
+   * Path: gtkwave4/src/helpers/fst
+   * Commit: 49a2a53caee83890dff503c15815fb53d5ccde74
+ * Licenses: see COPYING
+
+### How to upgrade libfst?
+ 1. Copy most recent sources from gtkwave to directory *fst*
+ 1. Update above section (e.g. commit hash)
+ 1. Update *libfstapi_build* according to *fst/fstapi.h*
+ 1. Check and update LICENSE files
+ 1. Check and update *pylibfst/helpers.py*
+ 1. Check and update examples
+ 1. Commit: Must contain the information from section above
