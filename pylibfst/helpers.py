@@ -63,3 +63,9 @@ def get_scopes_signals(fst):
             return (None, None)
 
     return (scopes, signals)
+
+
+def get_signal_name_by_handle(signals, handle):
+    """Returns the first matching signal name from the
+    given signals dictionary for the given handle"""
+    return list(signals.keys())[list(signals.values()).index(handle)]
