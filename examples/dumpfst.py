@@ -17,9 +17,9 @@ def dumpHierachryEntryScope(indent, fstHier):
     printi(indent, "Scope:")
     indent += 1
     printi(indent, "Type:          " + str(fstHier.u.scope.typ))
-    printi(indent, "Name:          " + str(pylibfst.ffi.string(fstHier.u.scope.name)))
+    printi(indent, "Name:          " + pylibfst.helpers.string(fstHier.u.scope.name))
     printi(indent, "Name Len:      " + str(fstHier.u.scope.name_length))
-    printi(indent, "Component:     " + str(pylibfst.ffi.string(fstHier.u.scope.component)))
+    printi(indent, "Component:     " + str(pylibfst.helpers.string(fstHier.u.scope.component)))
     printi(indent, "Component Len: " + str(fstHier.u.scope.component_length))
     return indent
 
@@ -28,7 +28,7 @@ def dumpHierachryEntryVar(indent, fstHier):
     printi(indent, "Var:")
     indent += 1
     printi(indent, "Type:          " + str(fstHier.u.var.typ))
-    printi(indent, "Name:          " + str(pylibfst.ffi.string(fstHier.u.var.name)))
+    printi(indent, "Name:          " + pylibfst.helpers.string(fstHier.u.var.name))
     printi(indent, "Name Len:      " + str(fstHier.u.var.name_length))
     printi(indent, "Direction:     " + str(fstHier.u.var.direction))
     printi(indent, "SVT Workspace: " + str(fstHier.u.var.svt_workspace))
@@ -46,7 +46,7 @@ def dumpHierachryEntryAttrBegin(indent, fstHier):
     indent += 1
     printi(indent, "Type:          " + str(fstHier.u.attr.typ))
     printi(indent, "Sub Type:      " + str(fstHier.u.attr.subtyp))
-    printi(indent, "Name:          " + str(pylibfst.ffi.string(fstHier.u.attr.name)))
+    printi(indent, "Name:          " + pylibfst.helpers.string(fstHier.u.attr.name))
     printi(indent, "Name Len:      " + str(fstHier.u.attr.name_length))
     printi(indent, "Arg:           " + str(fstHier.u.attr.arg))
     printi(indent, "Arg from Name: " + str(fstHier.u.attr.arg_from_name))
@@ -104,10 +104,10 @@ def dumpHierachy(fst):
 def dump(fst):
 
     verStr = pylibfst.lib.fstReaderGetVersionString(fst)
-    print("Version String:    " + str(pylibfst.ffi.string(verStr)))
+    print("Version String:    " + pylibfst.helpers.string(verStr))
 
     date = pylibfst.lib.fstReaderGetDateString(fst)
-    print("Date String:       " + str(pylibfst.ffi.string(date)))
+    print("Date String:       " + pylibfst.helpers.string(date))
 
     fileType = pylibfst.lib.fstReaderGetFileType(fst)
     print("File Type:         " + str(fileType))
@@ -182,8 +182,7 @@ def dump_signals(fst):
         print('{: >5d}'.format(time) + " ", end="")
         for signal in signals:
             handle = signals[signal]
-            val = pylibfst.ffi.string(pylibfst.lib.fstReaderGetValueFromHandleAtTime(fst, time, handle, buf))
-            val = val.decode('UTF-8')
+            val = pylibfst.helpers.string(pylibfst.lib.fstReaderGetValueFromHandleAtTime(fst, time, handle, buf))
             #val = int(val)
             print(str(val) + " ", end="")
         print()

@@ -5,6 +5,12 @@
 
 from _libfstapi import ffi, lib
 
+def string(val):
+    """Converts ffi cdata to python string"""
+    if val == ffi.NULL:
+        return ""
+    return ffi.string(val).decode("UTF-8")
+
 
 def get_scopes_signals(fst):
     """Iterate the hierarchy (using fstReaderIterateHierRewind and
@@ -13,7 +19,7 @@ def get_scopes_signals(fst):
 
     scopes = []
     signals = {}
-    cur_scope = b""
+    cur_scope = ""
     last_scopes = []
 
     lib.fstReaderIterateHierRewind(fst)
@@ -26,10 +32,10 @@ def get_scopes_signals(fst):
             last_scopes.append(cur_scope)
 
             # add new scope
-            if cur_scope != b"":
-                cur_scope += b"."
-            cur_scope += ffi.string(fstHier.u.scope.name)
-            scopes.append(cur_scope.decode('UTF-8'))
+            if cur_scope != "":
+                cur_scope += "."
+            cur_scope += string(fstHier.u.scope.name)
+            scopes.append(cur_scope)
 
         elif fstHier.htyp == lib.FST_HT_UPSCOPE:
             # restore last scope
@@ -37,7 +43,7 @@ def get_scopes_signals(fst):
 
         elif fstHier.htyp == lib.FST_HT_VAR:
             # add new variable with handle
-            var_name = (cur_scope + b"." + ffi.string(fstHier.u.var.name)).decode('UTF-8')
+            var_name = (cur_scope + "." + string(fstHier.u.var.name))
             signals[var_name] = fstHier.u.var.handle
 
         elif fstHier.htyp == lib.FST_HT_ATTRBEGIN:
