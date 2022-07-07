@@ -425,6 +425,27 @@ int             fstUtilityBinToEsc(unsigned char *d, const unsigned char *s, int
 int             fstUtilityEscToBin(unsigned char *d, unsigned char *s, int len);
 struct fstETab *fstUtilityExtractEnumTableFromString(const char *s);
 void 		fstUtilityFreeEnumTable(struct fstETab *etab); /* must use to free fstETab properly */
+
+
+
+/*****************************************************************************************************
+ * CFFI CALLBACK HANDLING
+ ****************************************************************************************************/
+
+/* callbacks for fstReaderIterBlocks and fstReaderIterBlocks2 */
+
+extern "Python" void pylibfst_value_change_callback(
+                            void *user_callback_data_pointer,
+                            uint64_t time,
+                            fstHandle facidx,
+                            const unsigned char *value);
+
+extern "Python" void pylibfst_value_change_callback_varlen(
+                            void *user_callback_data_pointer,
+                            uint64_t time,
+                            fstHandle facidx,
+                            const unsigned char *value,
+                            uint32_t len);
 """)
 
 
