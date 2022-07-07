@@ -145,7 +145,7 @@ cython_debug/
 .idea/
 .vscode/
 
-# emacs
+# emacs & vim
 *~
 \#*\#
 /.emacs.desktop
@@ -154,6 +154,7 @@ cython_debug/
 auto-save-list
 tramp
 .\#*
+*.swp
 
 # Org-mode
 .org-id-locations
