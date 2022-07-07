@@ -69,3 +69,81 @@ def get_signal_name_by_handle(signals, handle):
     """Returns the first matching signal name from the
     given signals dictionary for the given handle"""
     return list(signals.keys())[list(signals.values()).index(handle)]
+
+
+
+def fstReaderIterBlocks(fst,
+        value_change_callback,
+        user_callback_data = None, vcdhandle = None):
+    """Wrapped version of fstReaderIterBlocks. Allows the use of any
+    normal python function as callback (with slight overhead)"""
+
+    if vcdhandle is None:
+        vcdhandle = ffi.NULL
+
+    # wrap python callbacks and callback data
+    data = ffi.new_handle(
+            (
+                value_change_callback,
+                None,
+                user_callback_data
+            )
+    )
+
+    # call with wrapper
+    return lib.fstReaderIterBlocks(
+            fst,
+            lib.pylibfst_wrapped_value_change_callback,
+            data,
+            vcdhandle)
+
+
+def fstReaderIterBlocks2(fst,
+        value_change_callback, value_change_callback_varlen,
+        user_callback_data = None, vcdhandle = None):
+    """Wrapped version of fstReaderIterBlocks2. Allows the use of any
+    normal python function as callback (with slight overhead)"""
+
+    if vcdhandle is None:
+        vcdhandle = ffi.NULL
+
+    # wrap python callbacks and callback data
+    data = ffi.new_handle(
+            (
+                value_change_callback,
+                value_change_callback_varlen,
+                user_callback_data
+            )
+    )
+
+    # call with wrapper
+    return lib.fstReaderIterBlocks2(
+            fst,
+            lib.pylibfst_wrapped_value_change_callback,
+            lib.pylibfst_wrapped_value_change_callback_varlen,
+            data,
+            vcdhandle)
+
+
+@ffi.def_extern()
+def pylibfst_wrapped_value_change_callback(data, time, facidx, value):
+    """INTERNAL USE ONLY!
+    Callback wrapper for fstReaderIterBlocks and fstReaderIterBlocks2.
+    Unwraps python function and data and calls the python function with data"""
+
+    # unwrap python callback and data
+    data = ffi.from_handle(data)
+    # call wrapped callback
+    data[0](data[2], time, facidx, value)
+
+
+@ffi.def_extern()
+def pylibfst_wrapped_value_change_callback_varlen(data, time, facidx, value, length):
+    """INTERNAL USE ONLY!
+    Callback wrapper for fstReaderIterBlocks2.
+    Unwraps python function and data and calls the python function with data"""
+
+    # unwrap python callback and data
+    data = ffi.from_handle(data)
+    # call wrapped callback
+    data[1](data[2], time, facidx, value, length)

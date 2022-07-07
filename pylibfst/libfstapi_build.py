@@ -446,6 +446,26 @@ extern "Python" void pylibfst_value_change_callback_varlen(
                             fstHandle facidx,
                             const unsigned char *value,
                             uint32_t len);
+
+
+/*
+ * INTERNAL USE ONLY!
+ * callbacks for wrapped fstReaderIterBlocks and fstReaderIterBlocks2
+ * see helpers.py
+ */
+
+extern "Python" void pylibfst_wrapped_value_change_callback(
+                            void *user_callback_data_pointer,
+                            uint64_t time,
+                            fstHandle facidx,
+                            const unsigned char *value);
+
+extern "Python" void pylibfst_wrapped_value_change_callback_varlen(
+                            void *user_callback_data_pointer,
+                            uint64_t time,
+                            fstHandle facidx,
+                            const unsigned char *value,
+                            uint32_t len);
 """)
 
 
