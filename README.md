@@ -8,6 +8,35 @@ FST was developed as part of gtkwave.
 For more details on the format, see [GTKWave 3.3 Wave Analyzer User's Guide](http://gtkwave.sourceforge.net/gtkwave.pdf).
 
 
+
+## Build & Install
+
+### Install using PyPi (pip)
+Pylibfst is available from [PyPi](https://pypi.org/project/pylibfst)!
+
+```
+pip install pylibfst --user
+```
+
+### Build & Install from Source
+The latest development version of pylibfst is available on [github](https://github.com/mschlaegl/pylibfst).
+
+There are various ways to build and/or install pylibfst:
+ * Build from Source
+```
+python -m pip install --upgrade build
+python -m build
+```
+ * Build from Source using *setuptools*:
+```
+python setup.py sdist bdist_wheel
+```
+ * Build & Install from Source using *setuptools*:
+```
+python setup.py install
+```
+
+
 ## libfst Sources
  * Location: fst
  * Taken from
