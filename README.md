@@ -36,6 +36,29 @@ python setup.py sdist bdist_wheel
 python setup.py install
 ```
 
+## Usage
+A documentation on how to handle the cffi-style interface (calls, arguments, return values, ...) can be found in the [CFFI documentation](https://cffi.readthedocs.io/en/latest/using.html).
+
+Although the fst format and library are widely used, there is unfortunately no documentation for the libfst library.
+(more details on this: [FST API documentation · Issue #70 · gtkwave/gtkwave · GitHub](https://github.com/gtkwave/gtkwave/issues/70)).
+However, to support development, pylibfst comes with some helper functions and examples.
+
+ * **Helper functions**:
+   * *string(..)* .. Converts ffi cdata to a python string
+   * *get_scopes_signals(..)* .. Iterates the hierarchy and returns a list containing all scopes names and a dictionary containing all signal names with corresponding handles.
+   * *get_signal_name_by_handle(..)*: Returns the first matching signal name from the given signals dictionary for the given handle.
+   * *fstReaderIterBlocks(..)* and *fstReaderIterBlocks2(..)*: Wrapped versions of corresponding libfst functions. Allow the use of any normal Python function as a callback (with slight overhead).
+ * **Examples**
+   * *dumpfst.py* .. Demonstrates the main calls required to implement an fst reader.
+   * *IterBlocks_callback.py* .. Demonstrates the use of *fstReaderIterBlocks* and *fstReaderIterBlocks2* using cffi-style callbacks
+     * Advantage: Most efficient
+     * Disadvantage: Only one callback function per program possible
+   * *IterBlocks_wrapped_callback.py* .. Demonstrates the use of *fstReaderIterBlocks* and *fstReaderIterBlocks2* using pythonic callbacks (helper functions above)
+     * Advantage: "Normal" Python functions as callbacks (as many as you want)
+     * Disadvantage: Slightly more overhead due to wrapper function
+
+## Known Problems and TODOs
+ * Windows and Mac untested
 
 ## libfst Sources
  * Location: fst
