@@ -18,9 +18,7 @@ def dumpHierachryEntryScope(indent, fstHier):
     indent += 1
     printi(indent, "Type:          " + str(fstHier.u.scope.typ))
     printi(indent, "Name:          " + pylibfst.helpers.string(fstHier.u.scope.name))
-    printi(indent, "Name Len:      " + str(fstHier.u.scope.name_length))
     printi(indent, "Component:     " + str(pylibfst.helpers.string(fstHier.u.scope.component)))
-    printi(indent, "Component Len: " + str(fstHier.u.scope.component_length))
     return indent
 
 
@@ -29,7 +27,6 @@ def dumpHierachryEntryVar(indent, fstHier):
     indent += 1
     printi(indent, "Type:          " + str(fstHier.u.var.typ))
     printi(indent, "Name:          " + pylibfst.helpers.string(fstHier.u.var.name))
-    printi(indent, "Name Len:      " + str(fstHier.u.var.name_length))
     printi(indent, "Direction:     " + str(fstHier.u.var.direction))
     printi(indent, "SVT Workspace: " + str(fstHier.u.var.svt_workspace))
     printi(indent, "SDT Workspace: " + str(fstHier.u.var.sdt_workspace))
@@ -47,7 +44,6 @@ def dumpHierachryEntryAttrBegin(indent, fstHier):
     printi(indent, "Type:          " + str(fstHier.u.attr.typ))
     printi(indent, "Sub Type:      " + str(fstHier.u.attr.subtyp))
     printi(indent, "Name:          " + pylibfst.helpers.string(fstHier.u.attr.name))
-    printi(indent, "Name Len:      " + str(fstHier.u.attr.name_length))
     printi(indent, "Arg:           " + str(fstHier.u.attr.arg))
     printi(indent, "Arg from Name: " + str(fstHier.u.attr.arg_from_name))
     return indent
@@ -104,68 +100,36 @@ def dumpHierachy(fst):
 def dump(fst):
 
     verStr = pylibfst.lib.fstReaderGetVersionString(fst)
-    print("Version String:    " + pylibfst.helpers.string(verStr))
+    print("Version String:           " + pylibfst.helpers.string(verStr))
 
     date = pylibfst.lib.fstReaderGetDateString(fst)
-    print("Date String:       " + pylibfst.helpers.string(date))
+    print("Date String:              " + pylibfst.helpers.string(date))
 
     fileType = pylibfst.lib.fstReaderGetFileType(fst)
-    print("File Type:         " + str(fileType))
+    print("File Type:                " + str(fileType))
 
     varCount = pylibfst.lib.fstReaderGetVarCount(fst)
-    print("Var Count:         " + str(varCount))
+    print("Var Count:                " + str(varCount))
 
     scopeCount = pylibfst.lib.fstReaderGetScopeCount(fst)
-    print("Scope Count:       " + str(scopeCount))
+    print("Scope Count:              " + str(scopeCount))
 
     aliasCount = pylibfst.lib.fstReaderGetAliasCount(fst)
-    print("Alias Count:       " + str(aliasCount))
+    print("Alias Count:              " + str(aliasCount))
 
     startTime = pylibfst.lib.fstReaderGetStartTime(fst)
     endTime = pylibfst.lib.fstReaderGetEndTime(fst)
-    print("Start Time:        " + str(startTime))
-    print("End Time:          " + str(endTime))
+    print("Start Time:               " + str(startTime))
+    print("End Time:                 " + str(endTime))
 
     timeScale = pylibfst.lib.fstReaderGetTimescale(fst)
-    print("Time Scale:        " + str(timeScale))
+    print("Time Scale:               " + str(timeScale))
 
     timeZero = pylibfst.lib.fstReaderGetTimezero(fst)
-    print("Time Zero:         " + str(timeZero))
+    print("Time Zero:                " + str(timeZero))
 
     valChSecCnt = pylibfst.lib.fstReaderGetValueChangeSectionCount(fst)
-    print("V Change Sec Cnt:  " + str(valChSecCnt))
-
-    #void            fstReaderClrFacProcessMask(void *ctx, fstHandle facidx);
-    #void            fstReaderClrFacProcessMaskAll(void *ctx);
-    #const char *    fstReaderGetCurrentFlatScope(void *ctx);
-    #void *          fstReaderGetCurrentScopeUserInfo(void *ctx);
-    #int             fstReaderGetCurrentScopeLen(void *ctx);
-    #int             fstReaderGetDoubleEndianMatchState(void *ctx);
-    #uint64_t        fstReaderGetDumpActivityChangeTime(void *ctx, uint32_t idx);
-    #unsigned char   fstReaderGetDumpActivityChangeValue(void *ctx, uint32_t idx);
-    #int             fstReaderGetFacProcessMask(void *ctx, fstHandle facidx);
-    #int             fstReaderGetFseekFailed(void *ctx);
-    #fstHandle       fstReaderGetMaxHandle(void *ctx);
-    #uint64_t        fstReaderGetMemoryUsedByWriter(void *ctx);
-    #uint32_t        fstReaderGetNumberDumpActivityChanges(void *ctx);
-    #int             fstReaderIterBlocks(void *ctx,
-    #                        void (*value_change_callback)(void *user_callback_data_pointer, uint64_t time, fstHandle facidx, const unsigned char *value),
-    #                        void *user_callback_data_pointer, FILE *vcdhandle);
-    #int             fstReaderIterBlocks2(void *ctx,
-    #                        void (*value_change_callback)(void *user_callback_data_pointer, uint64_t time, fstHandle facidx, const unsigned char *value),
-    #                        void (*value_change_callback_varlen)(void *user_callback_data_pointer, uint64_t time, fstHandle facidx, const unsigned char *value, uint32_t len),
-    #                        void *user_callback_data_pointer, FILE *vcdhandle);
-    #void            fstReaderIterBlocksSetNativeDoublesOnCallback(void *ctx, int enable);
-    #void *          fstReaderOpenForUtilitiesOnly(void);
-    #const char *    fstReaderPopScope(void *ctx);
-    #int             fstReaderProcessHier(void *ctx, FILE *vcdhandle);
-    #const char *    fstReaderPushScope(void *ctx, const char *nam, void *user_info);
-    #void            fstReaderResetScope(void *ctx);
-    #void            fstReaderSetFacProcessMask(void *ctx, fstHandle facidx);
-    #void            fstReaderSetFacProcessMaskAll(void *ctx);
-    #void            fstReaderSetLimitTimeRange(void *ctx, uint64_t start_time, uint64_t end_time);
-    #void            fstReaderSetUnlimitedTimeRange(void *ctx);
-    #void            fstReaderSetVcdExtensions(void *ctx, int enable);
+    print("Value Change Section Cnt: " + str(valChSecCnt))
 
     dumpHierachy(fst)
 
@@ -174,34 +138,41 @@ def dump(fst):
 def dump_signals(fst):
     (_, signals) = pylibfst.get_scopes_signals(fst)
     for signal in signals:
-        print(str(signal) + " ", end="")
+        print("'" + str(signal) + "'; ", end="")
     print()
 
     buf = pylibfst.ffi.new("char[256]")
     for time in range(pylibfst.lib.fstReaderGetStartTime(fst), pylibfst.lib.fstReaderGetEndTime(fst)):
-        print('{: >5d}'.format(time) + " ", end="")
+        print("{: >5d}; ".format(time), end="")
         for signal in signals:
             handle = signals[signal]
             val = pylibfst.helpers.string(pylibfst.lib.fstReaderGetValueFromHandleAtTime(fst, time, handle, buf))
-            #val = int(val)
-            print(str(val) + " ", end="")
+            print(str(val) + "; ", end="")
         print()
 
 
+if len(sys.argv) != 2:
+    print("dumpfst (pylibfst example) (C) 2022 Manfred SCHLAEGL <manfred.schlaegl@gmx.at>\n")
+    print("Usage: " + sys.argv[0] + " <fstfile>\n")
+    print("Example: " + sys.argv[0] + " counter.fst\n")
+    sys.exit(1)
+filename = sys.argv[1]
 
-fst = pylibfst.lib.fstReaderOpen(b"counter.fst")
+fst = pylibfst.lib.fstReaderOpen(filename.encode("UTF-8"))
 if fst == pylibfst.ffi.NULL:
-    print("unable to open file!");
+    print("Unable to open file '" + filename + "'!");
     sys.exit(1)
 
 dump(fst)
+print()
 
 (scopes, signals) = pylibfst.get_scopes_signals(fst)
-print("scopes  " + str(scopes))
-print("signals " + str(signals))
+print("scopes:  " + str(scopes))
+print("signals: " + str(signals))
+print()
 
 dump_signals(fst)
+print()
 
 pylibfst.lib.fstReaderClose(fst)
-
 print("done")
