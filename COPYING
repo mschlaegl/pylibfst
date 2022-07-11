@@ -1,0 +1,8 @@
+This package contains sources under different licenses.
+
+Licenses and copyright notices can be found in:
+ * Python (Package, CFFI Wrapper, Helpers): LICENSE-pylibfst
+ * FST C Library:
+   * LICENSE-fst
+   * included FastLZ: LICENSE-fst-FastLZ
+   * included LZ4: LICENSE-fst-LZ4
