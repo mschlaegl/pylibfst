@@ -173,3 +173,6 @@ tramp
 flycheck_*.el
 # projectiles files
 .projectile
+
+# pylibfst
+_libfstapi.c
