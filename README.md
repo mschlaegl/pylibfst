@@ -13,7 +13,7 @@ For more details on the format, see [GTKWave 3.3 Wave Analyzer User's Guide](htt
 
 ### Dependencies
 Additional packages that need to be installed on the system:
- * C build environment (gcc, ...)
+ * cmake build environment (cmake, gcc, ...)
  * zlib-dev
 
 ### Install using PyPi (pip)
@@ -75,9 +75,11 @@ However, to support development, pylibfst comes with some helper functions and e
 
 ### How to upgrade libfst?
  1. Copy most recent sources from gtkwave to directory *fst*
+ 1. Check and update *fst/CMakeLists.txt* (see comments in file)
  1. Update above section (e.g. commit hash)
- 1. Update *libfstapi_build* according to *fst/fstapi.h*
+ 1. Update *pylibfst/libfstapi_build* according to *fst/fstapi.h*
  1. Check and update LICENSE files
  1. Check and update *pylibfst/helpers.py*
+ 1. Check build and install
  1. Check and update examples
  1. Commit: Must contain the information from section above

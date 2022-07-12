@@ -16,4 +16,13 @@ install: clean package
 	pip3 install dist/pylibfst*.whl --user
 
 clean:
-	rm -rf build dist pylibfst.egg-info
+	# remove all possible artifacts
+	rm -rf \
+		build \
+		dist \
+		pylibfst.egg-info \
+		fst/libfstapi.a \
+		fst/CMakeFiles \
+		fst/CMakeCache.txt \
+		fst/cmake_install.cmake \
+		fst/Makefile

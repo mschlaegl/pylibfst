@@ -469,17 +469,18 @@ extern "Python" void pylibfst_wrapped_value_change_callback_varlen(
 """)
 
 
-# TODO: Support windows builds (MINGW) -> see CMakeLists.txt
-
 ffibuilder.set_source("_libfstapi",
 """
      #include "fstapi.h"   // the C header of the library
 """,
-     libraries=["z"],
-     sources=["fst/fastlz.c", "fst/fstapi.c", "fst/lz4.c"],
-     extra_compile_args=["""-DFST_CONFIG_INCLUDE="fstapi.h" """],
-     include_dirs=["fst"]
-     )
+    # fstapi(libfstapi.a) is created by setup.py using
+    # cmake and the original CMakeLists.txt of fst
+    libraries=[
+        "fst/fstapi",
+        "z"
+    ],
+    include_dirs=["fst"]
+)
 
 if __name__ == "__main__":
     ffibuilder.compile(verbose=True)

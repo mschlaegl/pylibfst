@@ -4,11 +4,36 @@
 #
 
 import pathlib
+import sys
 from setuptools import setup, find_packages
+from distutils import spawn
+import distutils.command.build as _build
 
 here = pathlib.Path(__file__).parent.resolve()
 
 long_description = (here / "README.md").read_text(encoding="utf-8")
+
+def libfstapi_cmake_build(package_name):
+    class build(_build.build):
+        def run(self):
+            if spawn.find_executable("cmake") is None:
+                sys.stderr.write("CMake is required to build this package.\n")
+                sys.exit(-1)
+            try:
+                print("package_name " + package_name)
+                spawn.spawn(["cmake",
+                             "-H{0}".format(package_name),
+                             "-B{0}".format(package_name),
+                             ])
+                spawn.spawn(["cmake",
+                             "--build", package_name,
+                             "--target", "all"])
+            except spawn.DistutilsExecError:
+                sys.stderr.write("Error while building with CMake\n")
+                sys.exit(-1)
+            _build.build.run(self)
+    return build
+
 
 setup(
     name="pylibfst",
@@ -35,6 +60,7 @@ setup(
     ],
     packages=find_packages(),
     setup_requires=["cffi>=1.15.0"],
+    cmdclass={"build": libfstapi_cmake_build("fst")},
     cffi_modules=["pylibfst/libfstapi_build.py:ffibuilder"],
     install_requires=["cffi>=1.15.0"],
 )

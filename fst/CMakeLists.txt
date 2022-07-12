@@ -11,7 +11,22 @@ endif()
 ########################################################################################################################
 find_package(ZLIB REQUIRED)
 
-add_library(fstapi fstapi.c fstapi.h fst_win_unistd.h)
+
+########################################################################################################################
+# CHANGES FOR INTEGRATION IN PYLIBFST
+# (Restore after upgrade of fst from gtkwave)
+########################################################################################################################
+
+# ensure position independent code (needed for later integration in cffi shared lib)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+# integration fastlz and lz4
+#add_library(fstapi fstapi.c fstapi.h fst_win_unistd.h)
+add_library(fstapi fastlz.c fastlz.h lz4.c lz4.h fstapi.c fstapi.h fst_win_unistd.h)
+
+########################################################################################################################
+
+
 target_link_libraries(fstapi PRIVATE ZLIB::ZLIB)
 # hack to avoid creating dummy config.h
 target_compile_definitions(fstapi PRIVATE -DFST_CONFIG_INCLUDE="fstapi.h")
