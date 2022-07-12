@@ -22,18 +22,18 @@ pip install pylibfst --user
 The latest development version of pylibfst is available on [github](https://github.com/mschlaegl/pylibfst).
 
 There are various ways to build and/or install pylibfst:
- * Build from Source
+ * Build from Source using *Python*
 ```
 python -m pip install --upgrade build
 python -m build
 ```
- * Build from Source using *setuptools*:
+ * Build from Source using *make*
 ```
-python setup.py sdist bdist_wheel
+make all
 ```
- * Build & Install from Source using *setuptools*:
+ * Build & Install from Source using *make*
 ```
-python setup.py install
+make install
 ```
 
 ## Usage
