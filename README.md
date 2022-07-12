@@ -11,6 +11,11 @@ For more details on the format, see [GTKWave 3.3 Wave Analyzer User's Guide](htt
 
 ## Build & Install
 
+### Dependencies
+Additional packages that need to be installed on the system:
+ * C build environment (gcc, ...)
+ * zlib-dev
+
 ### Install using PyPi (pip)
 Pylibfst is available from [PyPi](https://pypi.org/project/pylibfst)!
 
