@@ -21,7 +21,7 @@ Additional packages that need to be installed on the system:
 Pylibfst is available from [PyPi](https://pypi.org/project/pylibfst)!
 
 ```
-pip install pylibfst --user
+pip install pylibfst
 ```
 
 ### Build & Install from Source
