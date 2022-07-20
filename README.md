@@ -65,6 +65,7 @@ However, to support development, pylibfst comes with some documented extensions,
      * Disadvantage: Slightly more overhead due to wrapper function
 
 ## Known Problems and TODOs
+ * TODO: Automated tests
  * Windows and Mac untested
 
 ## libfst Sources
