@@ -22,7 +22,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # integration fastlz and lz4
 #add_library(fstapi fstapi.c fstapi.h fst_win_unistd.h)
-add_library(fstapi fastlz.c fastlz.h lz4.c lz4.h fstapi.c fstapi.h fst_win_unistd.h)
+add_library(fstapi fastlz.c fastlz.h lz4.c lz4.h fstapi.c fstapi.h fstext.c fstext.h fst_win_unistd.h)
 
 ########################################################################################################################
 

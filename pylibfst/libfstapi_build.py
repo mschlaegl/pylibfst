@@ -429,6 +429,30 @@ void 		fstUtilityFreeEnumTable(struct fstETab *etab); /* must use to free fstETa
 
 
 /*****************************************************************************************************
+ * COPY FROM fstext.h
+ ****************************************************************************************************/
+
+struct fstTsList {
+	unsigned long size;	    // allocated space (#elements)
+	unsigned long nvals;	// #elements in list
+	uint64_t *val;		    // values
+};
+
+/*
+ * Get a fstTsList containing all timestamps of signals
+ * selected by FacProcessMask
+ * returns NULL on error
+ */
+struct fstTsList *fstReaderGetTimestamps(void *ctx);
+
+/*
+ * Free the fstTsList allocated by fstReaderGetTimestamps
+ */
+void fstReaderFreeTimestamps(struct fstTsList *tslist);
+
+
+
+/*****************************************************************************************************
  * CFFI CALLBACK HANDLING
  ****************************************************************************************************/
 
@@ -471,7 +495,9 @@ extern "Python" void pylibfst_wrapped_value_change_callback_varlen(
 
 ffibuilder.set_source("_libfstapi",
 """
-     #include "fstapi.h"   // the C header of the library
+    // the C headers of the library
+    #include "fstapi.h"
+    #include "fstext.h"
 """,
     # fstapi(libfstapi.a) is created by setup.py using
     # cmake and the original CMakeLists.txt of fst

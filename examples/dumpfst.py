@@ -136,12 +136,18 @@ def dump(fst):
 
 
 def dump_signals(fst, signals):
+
+    # get timestamps of all signal changes
+    pylibfst.lib.fstReaderSetFacProcessMaskAll(fst)
+    timestamps = pylibfst.lib.fstReaderGetTimestamps(fst)
+
     for signal in signals:
         print("'" + str(signal) + "'; ", end="")
     print()
 
     buf = pylibfst.ffi.new("char[256]")
-    for time in range(pylibfst.lib.fstReaderGetStartTime(fst), pylibfst.lib.fstReaderGetEndTime(fst)):
+    for ts in range(timestamps.nvals):
+        time = timestamps.val[ts]
         print("{: >5d}; ".format(time), end="")
         for signal in signals:
             handle = signals[signal]
@@ -149,6 +155,7 @@ def dump_signals(fst, signals):
             print(str(val) + "; ", end="")
         print()
 
+    pylibfst.lib.fstReaderFreeTimestamps(timestamps)
 
 if len(sys.argv) != 2:
     print("dumpfst (pylibfst example) (C) 2022 Manfred SCHLAEGL <manfred.schlaegl@gmx.at>\n")
