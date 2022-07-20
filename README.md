@@ -7,6 +7,7 @@ Unlike VCD, FST is a binary format that offers much better performance for very 
 FST was developed as part of gtkwave.
 For more details on the format, see [GTKWave 3.3 Wave Analyzer User's Guide](http://gtkwave.sourceforge.net/gtkwave.pdf).
 
+The latest development version of pylibfst is available on [github](https://github.com/mschlaegl/pylibfst).
 
 
 ## Build & Install
