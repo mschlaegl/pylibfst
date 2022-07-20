@@ -17,6 +17,13 @@ find_package(ZLIB REQUIRED)
 # (Restore after upgrade of fst from gtkwave)
 ########################################################################################################################
 
+# optimization
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+set(CMAKE_C_FLAGS_DEBUG "-g -O0")
+set(CMAKE_C_FLAGS_RELEASE "-O3")
+
 # ensure position independent code (needed for later integration in cffi shared lib)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
