@@ -135,8 +135,7 @@ def dump(fst):
 
 
 
-def dump_signals(fst):
-    (_, signals) = pylibfst.get_scopes_signals(fst)
+def dump_signals(fst, signals):
     for signal in signals:
         print("'" + str(signal) + "'; ", end="")
     print()
@@ -171,7 +170,7 @@ print("scopes:  " + str(scopes))
 print("signals: " + str(signals))
 print()
 
-dump_signals(fst)
+dump_signals(fst, signals)
 print()
 
 pylibfst.lib.fstReaderClose(fst)
