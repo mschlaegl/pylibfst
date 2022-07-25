@@ -33,10 +33,7 @@ jobs:
     - name: Lint
       run: |
         make lint
-    - name: Build package
-      run: |
-        make package
-    - name: Install package
+    - name: Build & Install package
       run: |
         make install
     - name: Test with pytest
