@@ -22,6 +22,15 @@ CPPCHECK_C_SOURCES=\
 	fst/lz4.h \
 	fst/fst_win_unistd.h
 
+#
+# C Sources to format automaticallys
+# (don't touch original libfst)
+#
+ASTYLE_ARGS=--options=none --suffix=none --quiet \
+	    --style=linux --indent=force-tab=8 --pad-header --pad-oper --indent-preprocessor
+ASTYLE_C_SOURCES=\
+	fst/fstext.c fst/fstext.h
+
 
 .PHONY: all lint _style style test package install clean
 
@@ -35,6 +44,7 @@ lint:
 
 _style:
 	black .
+	astyle $(ASTYLE_ARGS) $(ASTYLE_C_SOURCES)
 
 style: _style lint
 

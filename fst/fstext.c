@@ -79,7 +79,7 @@ static void tsValueChangeCallback(void *user_callback_data_pointer, uint64_t tim
 		return;
 
 	// ignore if timestamp is less or equal last
-	if ((tslist->nvals > 0) && (time <= tslist->val[tslist->nvals-1]))
+	if ((tslist->nvals > 0) && (time <= tslist->val[tslist->nvals - 1]))
 		return;
 
 	*tslist_ptr = tsListAdd(tslist, time);
