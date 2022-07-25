@@ -3,6 +3,26 @@
 # SPDX-License-Identifier: BSD 3-clause "New" or "Revised" License
 #
 
+#
+# C Sources to check with cppcheck
+#
+# check libfst only patially.
+# fstapi.c and lz4.c need fixes upstream
+#
+#CPPCHECK_C_SOURCES=\
+	fst/fastlz.c fst/fastlz.h \
+	fst/fstapi.c fst/fstapi.h \
+	fst/fstext.c fst/fstext.h \
+	fst/lz4.c fst/lz4.h \
+	fst/fst_win_unistd.h
+CPPCHECK_C_SOURCES=\
+	fst/fastlz.c fst/fastlz.h \
+	fst/fstapi.h \
+	fst/fstext.c fst/fstext.h \
+	fst/lz4.h \
+	fst/fst_win_unistd.h
+
+
 .PHONY: all lint _style style test package install clean
 
 all: package
@@ -11,6 +31,7 @@ lint:
 	# from .github/workflows/python-package.yml
 	flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 	flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	cppcheck -q -f ${CPPCHECK_C_SOURCES}
 
 _style:
 	black .
