@@ -32,7 +32,7 @@ ASTYLE_C_SOURCES=\
 	fst/fstext.c fst/fstext.h
 
 
-.PHONY: all lint _style style test package install clean
+.PHONY: all lint check _style style test package install clean
 
 all: package
 
@@ -41,6 +41,7 @@ lint:
 	flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 	flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 	cppcheck -q -f ${CPPCHECK_C_SOURCES}
+check: lint
 
 _style:
 	black .
