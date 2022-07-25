@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: BSD 3-clause "New" or "Revised" License
 #
 
-.PHONY: all lint _style style package install clean
+.PHONY: all lint _style style test package install clean
 
 all: package
 
@@ -16,6 +16,9 @@ _style:
 	black .
 
 style: _style lint
+
+test:
+	pytest
 
 package:
 	rm -rf dist/*
