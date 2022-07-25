@@ -46,22 +46,6 @@ def get_scopes_signals(fst):
             var_name = (cur_scope + "." + string(fstHier.u.var.name))
             signals[var_name] = fstHier.u.var.handle
 
-        elif fstHier.htyp == lib.FST_HT_ATTRBEGIN:
-            # ignored
-            pass
-        elif fstHier.htyp == lib.FST_HT_ATTREND:
-            # ignored
-            pass
-        elif fstHier.htyp == lib.FST_HT_TREEBEGIN:
-            # ignored
-            pass
-        elif fstHier.htyp == lib.FST_HT_TREEEND:
-            # ignored
-            pass
-        else:
-            print("Invalid htyp in hierarchy" + str(fstHier.htyp))
-            return (None, None)
-
     return (scopes, signals)
 
 
