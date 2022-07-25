@@ -64,6 +64,7 @@ setup(
         # "Operating System :: Microsoft :: Windows",    # Untested
     ],
     packages=find_packages(),
+    package_data={"pylibfst": ["libfstapi.cdef"]},
     setup_requires=["cffi>=1.15.0"],
     cmdclass={"build": libfstapi_cmake_build("fst")},
     cffi_modules=["pylibfst/libfstapi_build.py:ffibuilder"],

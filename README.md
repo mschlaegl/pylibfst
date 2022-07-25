@@ -83,7 +83,7 @@ However, to support development, pylibfst comes with some documented extensions,
  1. Copy most recent sources from gtkwave to directory *fst*
  1. Check and update *fst/CMakeLists.txt* (see comments in file)
  1. Update above section (e.g. commit hash)
- 1. Update *pylibfst/libfstapi_build* according to *fst/fstapi.h*
+ 1. Update *pylibfst/libfstapi_build.py* and *pylibfst/libfstapi.cdef* according to *fst/fstapi.h*
  1. Check and update LICENSE files
  1. Check and update *fst/fstext.h* and *fst/fstext.c*
  1. Check and update *pylibfst/helpers.py*
