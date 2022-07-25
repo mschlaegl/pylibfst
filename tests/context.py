@@ -1,4 +1,5 @@
-'''Handle imports for test'''
+"""Handle imports for test"""
 import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))

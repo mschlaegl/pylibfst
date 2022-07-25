@@ -13,6 +13,7 @@ here = pathlib.Path(__file__).parent.resolve()
 
 long_description = (here / "README.md").read_text(encoding="utf-8")
 
+
 def libfstapi_cmake_build(package_name):
     class build(_build.build):
         def run(self):
@@ -21,23 +22,25 @@ def libfstapi_cmake_build(package_name):
                 sys.exit(-1)
             try:
                 print("package_name " + package_name)
-                spawn.spawn(["cmake",
-                             "-H{0}".format(package_name),
-                             "-B{0}".format(package_name),
-                             ])
-                spawn.spawn(["cmake",
-                             "--build", package_name,
-                             "--target", "all"])
+                spawn.spawn(
+                    [
+                        "cmake",
+                        "-H{0}".format(package_name),
+                        "-B{0}".format(package_name),
+                    ]
+                )
+                spawn.spawn(["cmake", "--build", package_name, "--target", "all"])
             except spawn.DistutilsExecError:
                 sys.stderr.write("Error while building with CMake\n")
                 sys.exit(-1)
             _build.build.run(self)
+
     return build
 
 
 setup(
     name="pylibfst",
-    version="0.1.3-dev", # semantic versioning (Major.Minor.Patch)
+    version="0.1.3-dev",  # semantic versioning (Major.Minor.Patch)
     author="Manfred SCHLAEGL, fst C implementation: Tony Bybell",
     author_email="manfred.schlaegl@gmx.at",
     description="Handling of Fast Signal Traces (fst) in Python",
@@ -57,8 +60,8 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3 :: Only",
         "Operating System :: Unix",
-        #"Operating System :: MacOS :: MacOS X",        # Untested
-        #"Operating System :: Microsoft :: Windows",    # Untested
+        # "Operating System :: MacOS :: MacOS X",        # Untested
+        # "Operating System :: Microsoft :: Windows",    # Untested
     ],
     packages=find_packages(),
     setup_requires=["cffi>=1.15.0"],

@@ -5,6 +5,7 @@
 
 from _libfstapi import ffi, lib
 
+
 def string(val):
     """Converts ffi cdata to python string"""
     if val == ffi.NULL:
@@ -43,7 +44,7 @@ def get_scopes_signals(fst):
 
         elif fstHier.htyp == lib.FST_HT_VAR:
             # add new variable with handle
-            var_name = (cur_scope + "." + string(fstHier.u.var.name))
+            var_name = cur_scope + "." + string(fstHier.u.var.name)
             signals[var_name] = fstHier.u.var.handle
 
     return (scopes, signals)
@@ -55,10 +56,9 @@ def get_signal_name_by_handle(signals, handle):
     return list(signals.keys())[list(signals.values()).index(handle)]
 
 
-
-def fstReaderIterBlocks(fst,
-        value_change_callback,
-        user_callback_data = None, vcdhandle = None):
+def fstReaderIterBlocks(
+    fst, value_change_callback, user_callback_data=None, vcdhandle=None
+):
     """Wrapped version of fstReaderIterBlocks. Allows the use of any
     normal python function as callback (with slight overhead)"""
 
@@ -66,25 +66,21 @@ def fstReaderIterBlocks(fst,
         vcdhandle = ffi.NULL
 
     # wrap python callbacks and callback data
-    data = ffi.new_handle(
-            (
-                value_change_callback,
-                None,
-                user_callback_data
-            )
-    )
+    data = ffi.new_handle((value_change_callback, None, user_callback_data))
 
     # call with wrapper
     return lib.fstReaderIterBlocks(
-            fst,
-            lib.pylibfst_wrapped_value_change_callback,
-            data,
-            vcdhandle)
+        fst, lib.pylibfst_wrapped_value_change_callback, data, vcdhandle
+    )
 
 
-def fstReaderIterBlocks2(fst,
-        value_change_callback, value_change_callback_varlen,
-        user_callback_data = None, vcdhandle = None):
+def fstReaderIterBlocks2(
+    fst,
+    value_change_callback,
+    value_change_callback_varlen,
+    user_callback_data=None,
+    vcdhandle=None,
+):
     """Wrapped version of fstReaderIterBlocks2. Allows the use of any
     normal python function as callback (with slight overhead)"""
 
@@ -93,20 +89,17 @@ def fstReaderIterBlocks2(fst,
 
     # wrap python callbacks and callback data
     data = ffi.new_handle(
-            (
-                value_change_callback,
-                value_change_callback_varlen,
-                user_callback_data
-            )
+        (value_change_callback, value_change_callback_varlen, user_callback_data)
     )
 
     # call with wrapper
     return lib.fstReaderIterBlocks2(
-            fst,
-            lib.pylibfst_wrapped_value_change_callback,
-            lib.pylibfst_wrapped_value_change_callback_varlen,
-            data,
-            vcdhandle)
+        fst,
+        lib.pylibfst_wrapped_value_change_callback,
+        lib.pylibfst_wrapped_value_change_callback_varlen,
+        data,
+        vcdhandle,
+    )
 
 
 @ffi.def_extern()

@@ -6,6 +6,7 @@
 import sys
 import pylibfst
 
+
 def printi(indent, *args):
     for i in range(indent):
         print("  ", end="")
@@ -18,7 +19,10 @@ def dumpHierachryEntryScope(indent, fstHier):
     indent += 1
     printi(indent, "Type:          " + str(fstHier.u.scope.typ))
     printi(indent, "Name:          " + pylibfst.helpers.string(fstHier.u.scope.name))
-    printi(indent, "Component:     " + str(pylibfst.helpers.string(fstHier.u.scope.component)))
+    printi(
+        indent,
+        "Component:     " + str(pylibfst.helpers.string(fstHier.u.scope.component)),
+    )
     return indent
 
 
@@ -134,7 +138,6 @@ def dump(fst):
     dumpHierachy(fst)
 
 
-
 def dump_signals(fst, signals):
 
     # get timestamps of all signal changes
@@ -151,14 +154,19 @@ def dump_signals(fst, signals):
         print("{: >5d}; ".format(time), end="")
         for signal in signals:
             handle = signals[signal]
-            val = pylibfst.helpers.string(pylibfst.lib.fstReaderGetValueFromHandleAtTime(fst, time, handle, buf))
+            val = pylibfst.helpers.string(
+                pylibfst.lib.fstReaderGetValueFromHandleAtTime(fst, time, handle, buf)
+            )
             print(str(val) + "; ", end="")
         print()
 
     pylibfst.lib.fstReaderFreeTimestamps(timestamps)
 
+
 if len(sys.argv) != 2:
-    print("dumpfst (pylibfst example) (C) 2022 Manfred SCHLAEGL <manfred.schlaegl@gmx.at>\n")
+    print(
+        "dumpfst (pylibfst example) (C) 2022 Manfred SCHLAEGL <manfred.schlaegl@gmx.at>\n"
+    )
     print("Usage: " + sys.argv[0] + " <fstfile>\n")
     print("Example: " + sys.argv[0] + " counter.fst\n")
     sys.exit(1)
@@ -166,7 +174,7 @@ filename = sys.argv[1]
 
 fst = pylibfst.lib.fstReaderOpen(filename.encode("UTF-8"))
 if fst == pylibfst.ffi.NULL:
-    print("Unable to open file '" + filename + "'!");
+    print("Unable to open file '" + filename + "'!")
     sys.exit(1)
 
 dump(fst)
