@@ -40,7 +40,7 @@ def libfstapi_cmake_build(package_name):
 
 setup(
     name="pylibfst",
-    version="0.2.0",  # semantic versioning (Major.Minor.Patch)
+    version="0.2.1-dev",  # semantic versioning (Major.Minor.Patch)
     author="Manfred SCHLAEGL, fst C implementation: Tony Bybell",
     author_email="manfred.schlaegl@gmx.at",
     description="Handling of Fast Signal Traces (fst) in Python",
