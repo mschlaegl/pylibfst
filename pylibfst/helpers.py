@@ -4,6 +4,7 @@
 #
 
 from _libfstapi import ffi, lib
+from collections import namedtuple
 
 
 def string(val):
@@ -13,15 +14,24 @@ def string(val):
     return ffi.string(val).decode("UTF-8")
 
 
-def get_scopes_signals(fst):
-    """Iterate the hierarchy (using fstReaderIterateHierRewind and
-    fstReaderIterateHier) and return a list containing all scopes names
-    and a dictionary containing all signal names with corresponding handles"""
+def get_scopes_signals2(fst):
+    """Iterates the hierarchy (using fstReaderIterateHierRewind and
+    fstReaderIterateHier) and returns a list containing all scope names
+    and a named tuple containing two dictionaries which describe the signals:
+    The "by_name" dictionary maps from signal names, the "by_handle" from
+    signal handles to a corresponding named tuple containing signal name,
+    length and handle.
+    Note that signals with different name may have the same handle,
+    therefore "by_handle" may have less entries than "by_name".
+    """
 
     scopes = []
-    signals = {}
+    signals_by_name = {}
+    signals_by_handle = {}
     cur_scope = ""
     last_scopes = []
+    Signal = namedtuple("Signal", "name length handle")
+    Signals = namedtuple("Signals", "by_name by_handle")
 
     lib.fstReaderIterateHierRewind(fst)
     while True:
@@ -45,14 +55,34 @@ def get_scopes_signals(fst):
         elif fstHier.htyp == lib.FST_HT_VAR:
             # add new variable with handle
             var_name = cur_scope + "." + string(fstHier.u.var.name)
-            signals[var_name] = fstHier.u.var.handle
+            handle = fstHier.u.var.handle
+            signal = Signal(var_name, fstHier.u.var.length, handle)
+            signals_by_name[var_name] = signal
+            # add first signal name for handle
+            signals_by_handle.setdefault(handle, signal)
+            signals = Signals(signals_by_name, signals_by_handle)
 
     return (scopes, signals)
 
 
+def get_scopes_signals(fst):
+    """(Deprecated) Iterate the hierarchy (using fstReaderIterateHierRewind and
+    fstReaderIterateHier) and return a list containing all scopes names
+    and a dictionary containing all signal names with corresponding handles
+
+    This function is deprecated! Use get_scopes_signals2 instead!
+    """
+    (scopes, signals) = get_scopes_signals2(fst)
+    return (scopes, {key: value.handle for (key, value) in signals.by_name.items()})
+
+
 def get_signal_name_by_handle(signals, handle):
-    """Returns the first matching signal name from the
-    given signals dictionary for the given handle"""
+    """(Deprecated) Returns the first matching signal name from the
+    given signals dictionary for the given handle
+
+    This function is deprecated! Use get_scopes_signals2 and the returned
+    "by_handle" signal dictionary instead!
+    """
     return list(signals.keys())[list(signals.values()).index(handle)]
 
 

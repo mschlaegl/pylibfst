@@ -90,15 +90,8 @@ DUMP HIRARCHY:
       + fstHandle:     4
       + is_alias:      0
 
-Scopes:  ['tb', 'tb.dut']
-Signals:
-    Signal(name='tb.overflow', length=1, handle=1)
-    Signal(name='tb.clk', length=1, handle=2)
-    Signal(name='tb.reset', length=1, handle=3)
-    Signal(name='tb.dut.clk', length=1, handle=2)
-    Signal(name='tb.dut.reset', length=1, handle=3)
-    Signal(name='tb.dut.overflow', length=1, handle=1)
-    Signal(name='tb.dut.counter [3:0]', length=4, handle=4)
+scopes:  ['tb', 'tb.dut']
+signals: {'tb.overflow': 1, 'tb.clk': 2, 'tb.reset': 3, 'tb.dut.clk': 2, 'tb.dut.reset': 3, 'tb.dut.overflow': 1, 'tb.dut.counter [3:0]': 4}
 
 'tb.overflow'; 'tb.clk'; 'tb.reset'; 'tb.dut.clk'; 'tb.dut.reset'; 'tb.dut.overflow'; 'tb.dut.counter [3:0]'; 
     0; 0; 0; 1; 0; 1; 0; 0000; 

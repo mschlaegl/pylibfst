@@ -19,7 +19,7 @@ def value_change_callback(data, time, facidx, value):
         + " "
         + str(facidx)
         + " "
-        + signals.by_handle[facidx].name
+        + pylibfst.helpers.get_signal_name_by_handle(signals, facidx)
         + " "
         + pylibfst.helpers.string(value)
     )
@@ -35,7 +35,7 @@ def value_change_callback_varlen(data, time, facidx, value, length):
         + " "
         + str(facidx)
         + " "
-        + signals.by_handle[facidx].name
+        + pylibfst.helpers.get_signal_name_by_handle(signals, facidx)
         + " "
         + pylibfst.helpers.string(value)
         + " "
@@ -58,7 +58,7 @@ if fst == pylibfst.ffi.NULL:
     sys.exit(1)
 
 
-(scopes, signals) = pylibfst.get_scopes_signals2(fst)
+(scopes, signals) = pylibfst.get_scopes_signals(fst)
 
 pylibfst.lib.fstReaderSetFacProcessMaskAll(fst)
 

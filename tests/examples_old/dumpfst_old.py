@@ -144,19 +144,18 @@ def dump_signals(fst, signals):
     pylibfst.lib.fstReaderSetFacProcessMaskAll(fst)
     timestamps = pylibfst.lib.fstReaderGetTimestamps(fst)
 
-    for signal in signals.by_name.values():
-        print("'" + signal.name + "'; ", end="")
+    for signal in signals:
+        print("'" + str(signal) + "'; ", end="")
     print()
 
     buf = pylibfst.ffi.new("char[256]")
     for ts in range(timestamps.nvals):
         time = timestamps.val[ts]
         print("{: >5d}; ".format(time), end="")
-        for signal in signals.by_name.values():
+        for signal in signals:
+            handle = signals[signal]
             val = pylibfst.helpers.string(
-                pylibfst.lib.fstReaderGetValueFromHandleAtTime(
-                    fst, time, signal.handle, buf
-                )
+                pylibfst.lib.fstReaderGetValueFromHandleAtTime(fst, time, handle, buf)
             )
             print(str(val) + "; ", end="")
         print()
@@ -181,11 +180,9 @@ if fst == pylibfst.ffi.NULL:
 dump(fst)
 print()
 
-(scopes, signals) = pylibfst.get_scopes_signals2(fst)
-print("Scopes:  " + str(scopes))
-print("Signals:")
-for signal in signals.by_name.values():
-    print("    " + str(signal))
+(scopes, signals) = pylibfst.get_scopes_signals(fst)
+print("scopes:  " + str(scopes))
+print("signals: " + str(signals))
 print()
 
 dump_signals(fst, signals)

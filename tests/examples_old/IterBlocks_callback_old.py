@@ -6,36 +6,36 @@
 import sys
 import pylibfst
 
-# pythonic callbacks
+# cffi style callbacks
 
 
-def value_change_callback(data, time, facidx, value):
+@pylibfst.ffi.def_extern()
+def pylibfst_value_change_callback(user_callback_data_pointer, time, facidx, value):
 
     print(
         "value_change_callback "
-        + str(data)
-        + " "
         + str(time)
         + " "
         + str(facidx)
         + " "
-        + signals.by_handle[facidx].name
+        + pylibfst.helpers.get_signal_name_by_handle(signals, facidx)
         + " "
         + pylibfst.helpers.string(value)
     )
 
 
-def value_change_callback_varlen(data, time, facidx, value, length):
+@pylibfst.ffi.def_extern()
+def pylibfst_value_change_callback_varlen(
+    user_callback_data_pointer, time, facidx, value, length
+):
 
     print(
         "value_change_callback_varlen "
-        + str(data)
-        + " "
         + str(time)
         + " "
         + str(facidx)
         + " "
-        + signals.by_handle[facidx].name
+        + pylibfst.helpers.get_signal_name_by_handle(signals, facidx)
         + " "
         + pylibfst.helpers.string(value)
         + " "
@@ -45,7 +45,7 @@ def value_change_callback_varlen(data, time, facidx, value, length):
 
 if len(sys.argv) != 2:
     print(
-        "IterBlocks_wrapped_callback (pylibfst example) (C) 2022 Manfred SCHLAEGL <manfred.schlaegl@gmx.at>\n"
+        "IterBlocks_callback (pylibfst example) (C) 2022 Manfred SCHLAEGL <manfred.schlaegl@gmx.at>\n"
     )
     print("Usage: " + sys.argv[0] + " <fstfile>\n")
     print("Example: " + sys.argv[0] + " counter.fst\n")
@@ -58,22 +58,28 @@ if fst == pylibfst.ffi.NULL:
     sys.exit(1)
 
 
-(scopes, signals) = pylibfst.get_scopes_signals2(fst)
+(scopes, signals) = pylibfst.get_scopes_signals(fst)
 
 pylibfst.lib.fstReaderSetFacProcessMaskAll(fst)
 
 print("fstReaderIterBlocks")
-ret = pylibfst.helpers.fstReaderIterBlocks(
-    fst, value_change_callback, "My_Test_Data"
-)  # can be any python object
+ret = pylibfst.lib.fstReaderIterBlocks(
+    fst,
+    pylibfst.lib.pylibfst_value_change_callback,
+    pylibfst.ffi.NULL,
+    pylibfst.ffi.NULL,
+)
 print("ret " + str(ret))
 
 print("fstReaderIterBlocks2")
-ret = pylibfst.helpers.fstReaderIterBlocks2(
-    fst, value_change_callback, value_change_callback_varlen, "My_Test_Data"
-)  # can be any python object
+ret = pylibfst.lib.fstReaderIterBlocks2(
+    fst,
+    pylibfst.lib.pylibfst_value_change_callback,
+    pylibfst.lib.pylibfst_value_change_callback_varlen,
+    pylibfst.ffi.NULL,
+    pylibfst.ffi.NULL,
+)
 print("ret " + str(ret))
 
 pylibfst.lib.fstReaderClose(fst)
-
 print("done")

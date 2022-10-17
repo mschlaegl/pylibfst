@@ -5,6 +5,7 @@
 
 from _libfstapi import ffi, lib
 from .helpers import string
+from .helpers import get_scopes_signals2
 from .helpers import get_scopes_signals
 from .helpers import get_signal_name_by_handle
 from .helpers import fstReaderIterBlocks
@@ -14,6 +15,7 @@ __all__ = (
     "lib",
     "ffi",
     "string",
+    "get_scopes_signals2",
     "get_scopes_signals",
     "get_signal_name_by_handle",
     "fstReaderIterBlocks",

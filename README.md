@@ -55,8 +55,9 @@ However, to support development, pylibfst comes with some documented extensions,
  * **Extensions**: see *fst/fstext.h*
  * **Helper functions**:
    * *string(..)* .. Converts ffi cdata to a python string
-   * *get_scopes_signals(..)* .. Iterates the hierarchy and returns a list containing all scopes names and a dictionary containing all signal names with corresponding handles.
-   * *get_signal_name_by_handle(..)*: Returns the first matching signal name from the given signals dictionary for the given handle.
+   * *get_scopes_signals2(..)* .. Iterates the hierarchy and returns a list containing all scope names and a named tuple containing two dictionaries which describe the signals:
+The *by_name* dictionary maps from signal names, the *by_handle* from signal handles to a corresponding named tuple containing signal name, length and handle.
+    Note that signals with different name may have the same handle, therefore *by_handle* may have less entries than *by_name*.
    * *fstReaderIterBlocks(..)* and *fstReaderIterBlocks2(..)*: Wrapped versions of corresponding libfst functions. Allow the use of any normal Python function as a callback (with slight overhead).
  * **Examples**
    * *dumpfst.py* .. Demonstrates the main calls required to implement an fst reader.
