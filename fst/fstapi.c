@@ -3902,10 +3902,9 @@ while (value)
 static int fstVcdIDForFwrite(char *buf, unsigned int value)
 {
 char *pnt = buf;
-int len = 0;
 
 /* zero is illegal for a value...it is assumed they start at one */
-while (value && len <= 14)
+while (value)
         {
         value--;
 	++len;
@@ -3913,7 +3912,7 @@ while (value && len <= 14)
         value = value / 94;
         }
 
-return len;
+ return(pnt - buf);
 }
 
 
