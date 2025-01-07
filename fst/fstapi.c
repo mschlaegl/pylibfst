@@ -3907,12 +3907,11 @@ char *pnt = buf;
 while (value)
         {
         value--;
-	++len;
         *(pnt++) = (char)('!' + value % 94);
         value = value / 94;
         }
 
- return(pnt - buf);
+return(pnt - buf);
 }
 
 
