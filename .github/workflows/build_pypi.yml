@@ -124,6 +124,7 @@ jobs:
         with:
           path: dist
           merge-multiple: true
+          verbose: true
       - name: Publish to PyPi Test
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
