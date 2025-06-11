@@ -123,7 +123,9 @@ jobs:
     name: Test Release
     runs-on: ubuntu-latest
     if: "! startsWith(github.ref, 'refs/tags/')"
-    needs: [linux, macos, sdist]
+#   macos disabled (see above)
+#   needs: [linux, macos, sdist]
+    needs: [linux, sdist]
     permissions:
       id-token: write
     environment: pypi
