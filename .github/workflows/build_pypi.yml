@@ -124,13 +124,13 @@ jobs:
         with:
           path: dist
           merge-multiple: true
-          verbose: true
       - name: Publish to PyPi Test
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           attestations: false
           skip-existing: true
           repository-url: https://test.pypi.org/legacy/
+          verbose: true
 
   release:
     name: Release
