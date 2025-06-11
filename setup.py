@@ -5,6 +5,7 @@
 
 import pathlib
 import sys
+import shutil
 from setuptools import setup, find_packages
 from distutils import spawn
 import distutils.command.build as _build
@@ -17,7 +18,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 def libfstapi_cmake_build(package_name):
     class build(_build.build):
         def run(self):
-            if spawn.find_executable("cmake") is None:
+            if shutil.which("cmake") is None:
                 sys.stderr.write("CMake is required to build this package.\n")
                 sys.exit(-1)
             try:
