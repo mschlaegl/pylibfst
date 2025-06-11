@@ -48,41 +48,47 @@ jobs:
           path: dist/*
           if-no-files-found: error
 
-  macos:
-    runs-on: ${{ matrix.platform.runner }}
-    strategy:
-      matrix:
-        platform:
-          - runner: macos-latest
-            target: x86_64
-          - runner: macos-14
-            target: aarch64
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
-      - uses: actions/setup-python@v5
-        name: Install Python
-        with:
-          python-version: '3.11'
-        
-      - name: Install dependencies
-        #run: python -m pip install build
-        run: python -m pip install cibuildwheel==3.0
-
-      - name: Build 
-        id: build_macos
-        #run: python -m build --wheel
-        run: python -m cibuildwheel --output-dir dist
-
-      - name: Upload wheels
-        uses: actions/upload-artifact@v4
-        with:
-          name: wheels-macos-${{ matrix.platform.target }}
-          path: dist/*
-          if-no-files-found: error
+# Temporary disabled
+# Exact same problem on both targets (arm and x86):
+#  * cmake builds x86
+#  * cffi expects arm
+#  * No fail in log, but result is broken!
+# 
+#  macos:
+#    runs-on: ${{ matrix.platform.runner }}
+#    strategy:
+#      matrix:
+#        platform:
+#          - runner: macos-latest
+#            target: x86_64
+#          - runner: macos-14
+#            target: aarch64
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#          persist-credentials: false
+#
+#      - uses: actions/setup-python@v5
+#        name: Install Python
+#        with:
+#          python-version: '3.11'
+#        
+#      - name: Install dependencies
+#        #run: python -m pip install build
+#        run: python -m pip install cibuildwheel==3.0
+#
+#      - name: Build 
+#        id: build_macos
+#        #run: python -m build --wheel
+#        run: python -m cibuildwheel --output-dir dist
+#
+#      - name: Upload wheels
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: wheels-macos-${{ matrix.platform.target }}
+#          path: dist/*
+#          if-no-files-found: error
 
   sdist:
     name: Build sdist
